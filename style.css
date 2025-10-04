@@ -95,3 +95,40 @@
     margin-left: 25%;
     margin-right: 20%;
   }
+
+  @media (max-width: 768px) {
+    body {
+      margin: 0;
+      padding: 10px;
+      background-color: #f0f0f0;
+    }
+  
+    .container {
+      flex-direction: column;
+      height: auto;
+      padding: 10px;
+    }
+  
+    .box {
+      margin-bottom: 10px;
+      padding: 20px;
+      background-size: contain;
+    }
+  
+    #header {
+      padding-left: 0;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+  
+    #resetButton {
+      position: static;
+      margin: 20px auto;
+      display: block;
+    }
+  
+    .date-time {
+      font-size: 1rem;
+    }
+  }
+  
