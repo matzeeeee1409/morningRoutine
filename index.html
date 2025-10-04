@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morning Routine</title>
+</head>
+<body>
+  <div class="container1">
+    <h2 id="header">Morning Routine</h2>
+    <p id="dateTimeDisplay" class="date-time"></p>
+    <div class="container">
+      <div class="box tooth" id="tooth"></div>
+      <div class="box razor" id="razor"></div>
+      <div class="box coffee" id="coffee"></div>
+      <div class="box pushUps" id="pushUps"></div>
+      <button id="resetButton">Reset</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const changedBoxes = new Set();
+
+    function changeBackground(id) {
+      const element = document.getElementById(id);
+      element.style.backgroundImage = "url('check.png')";
+      changedBoxes.add(id);
+
+      if (changedBoxes.size === 4) {
+        triggerConfetti();
+      }
+    }
+
+    function triggerConfetti() {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    document.getElementById("tooth").addEventListener("click", () => changeBackground("tooth"));
+    document.getElementById("razor").addEventListener("click", () => changeBackground("razor"));
+    document.getElementById("coffee").addEventListener("click", () => changeBackground("coffee"));
+    document.getElementById("pushUps").addEventListener("click", () => changeBackground("pushUps"));
+
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long' };
+      const weekday = now.toLocaleDateString('de-DE', options);
+
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+
+      const formatted = `${weekday} ${day}.${month}. ${hours}:${minutes}:${seconds}`;
+      document.getElementById("dateTimeDisplay").textContent = formatted;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+
+    function resetBackgrounds() {
+      const ids = ["tooth", "razor", "coffee", "pushUps"];
+      ids.forEach(id => {
+        const element = document.getElementById(id);
+        element.style.backgroundImage = "";
+      });
+      changedBoxes.clear();
+    }
+
+    document.getElementById("resetButton").addEventListener("click", resetBackgrounds);
+  </script>
+</body>
+</html>
